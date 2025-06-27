@@ -1,6 +1,5 @@
 <template>
-  <h1>Vue - Profile</h1>
-  <button class="btn btn-xl">Xlarge</button>
+  <router-view></router-view>
 </template>
 
 <script>
