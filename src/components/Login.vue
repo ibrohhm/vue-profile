@@ -24,7 +24,21 @@
       </div>
     </div>
     <div class="login-note mt-5">
-      No account? <a class="link">Register here</a>
+      No account? <a class="link" @click="showRegister">Register here</a>
     </div>
   </div>
 </template>
+
+<script>
+export default {
+  name: "Login",
+  data(){
+    return {}
+  },
+  methods: {
+    showRegister() {
+      this.$emit('showRegister')
+    }
+  },
+}
+</script>
