@@ -1,7 +1,7 @@
 <template>
   <div id="profile" class="flex justify-center items-center w-full h-screen">
-    <ProfileTab class="w-1/4"></ProfileTab>
-    <ProfileDetail class="w-1/2"></ProfileDetail>
+    <ProfileTab @OnClickProfileTab="OnClickProfileTab" class="w-1/4"></ProfileTab>
+    <ProfileDetail class="w-1/2" :section="section"></ProfileDetail>
     <ProfileAction class="w-1/4"></ProfileAction>
   </div>
 </template>
@@ -19,7 +19,14 @@ export default {
     ProfileTab,
   },
   data(){
-    return {}
+    return {
+      section: "basic"
+    }
+  },
+  methods: {
+    OnClickProfileTab(section){
+      this.section = section
+    }
   }
 }
 </script>
