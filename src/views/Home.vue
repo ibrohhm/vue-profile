@@ -1,7 +1,19 @@
-
 <template>
-  <div>
-    <h2>Home Page</h2>
-    <p>Welcome to the home page!</p>
+  <div id="home" class="flex justify-center items-center w-full h-screen">
+    <login></login>
   </div>
 </template>
+
+<script>
+import Login from '../components/Login.vue'
+
+export default {
+  name: "Home",
+  components: {
+    Login
+  },
+  data(){
+    return {}
+  },
+}
+</script>
