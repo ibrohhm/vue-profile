@@ -1,6 +1,6 @@
 <template>
   <navbar></navbar>
-  <div id="profile" class="flex justify-center w-full h-screen mt-20 pt-20">
+  <div id="edit-profile" class="flex justify-center w-full">
     <ProfileTab @onClickProfileTab="onClickProfileTab" :hasSpouse="hasSpouse" class="w-1/4 px-10 py-20"></ProfileTab>
     <ProfileDetail :profile="profile" class="w-1/2" :section="section" :editMode="editMode" @onChangeMaritalStatus="onChangeMaritalStatus"></ProfileDetail>
     <ProfileAction :editMode="editMode" class="w-1/4"></ProfileAction>
@@ -98,3 +98,13 @@ export default {
   }
 }
 </script>
+<style scoped>
+#edit-profile{
+  padding: 80px 20px;
+  min-height: 100vh;
+  box-shadow: inset rgba(76, 76, 92, 1) 0px -5px,
+              inset rgba(76, 76, 92, 0.75) 0px -10px,
+              inset rgba(76, 76, 92, 0.5) 0px -15px,
+              inset rgba(76, 76, 92, 0.25) 0px -20px;
+}
+</style>

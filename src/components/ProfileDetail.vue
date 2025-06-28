@@ -3,7 +3,12 @@
     <div class="profile-detail--header">
       <div class="divider divider-start divider-neutral text-4xl flex align-end">{{ editMode ? "Edit" : "My" }} <span class="font-bold">Profile</span></div>
     </div>
-    <div class="profile-detail--content flex justify-between mt-10">
+    <div class="profile-detail--content flex justify-between mt-10 container-card shadow-xl">
+      <div class="container-card-dots flex">
+        <div class="item-dot m-1"></div>
+        <div class="item-dot m-1"></div>
+        <div class="item-dot m-1"></div>
+      </div>
       <div class="profile-detail--content-profile-picture w-1/4 p-5">
         <div class="profile-detail--content-image"></div>
         <div class="profile-detail--content-upload link" @click="onClickUploadImage" v-if="editMode">Upload image</div>

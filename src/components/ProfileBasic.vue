@@ -81,7 +81,7 @@ export default {
 <style scoped>
   input:disabled{
     color: black;
-    background-color: white;
+    background-color: inherit;
     border: none;
     &:hover{
       cursor: text;
