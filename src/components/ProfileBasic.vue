@@ -2,7 +2,11 @@
   <div class="profile-basic">
     <fieldset class="profile-basic--salutation fieldset">
       <legend class="fieldset-legend text-base">Salutation*</legend>
-      <input type="text" class="input w-full" :value="salutation" :disabled="!editMode"/>
+      <input v-if="!editMode" type="text" class="input w-full" :value="salutation" disabled/>
+      <select v-else id="salutation" class="select w-full" v-model="salutation">
+        <option disabled value="">-- Select salutation --</option>
+        <option v-for="item in salutationList" :key="item" :value="item">{{ item }}</option>
+      </select>
     </fieldset>
     <fieldset class="profile-basic--first-name fieldset">
       <legend class="fieldset-legend text-base">First name*</legend>
@@ -33,6 +37,7 @@ export default {
   },
   data(){
     return {
+      salutationList: ["Mr.", "Ms.", "Mrs."],
       salutation: "",
       firstName: "",
       lastName: "",
@@ -41,10 +46,10 @@ export default {
   },
   watch: {
     profile(value){
-      this.salutation = value.salutation
-      this.firstName = value.firstName
-      this.lastName = value.lastName
-      this.email = value.email
+      this.salutation = value.salutation || ""
+      this.firstName = value.firstName || ""
+      this.lastName = value.lastName || ""
+      this.email = value.email || ""
     }
   }
 }

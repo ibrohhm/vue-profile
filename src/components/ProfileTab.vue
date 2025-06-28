@@ -2,8 +2,8 @@
   <div class="profile-tab">
     <ul class="menu rounded-box w-full">
       <li v-for="item in profileTabs" :key="item.section" class="profile-tab-item text-base p-1"
-        :class="{active: item.section == activeTab}" @click="OnClickProfileTab(item.section)">
-        <a>{{ item.text }}</a>
+        :class="{active: item.section == activeTab, hidden: !this.hasSpouse && item.section === 'spouse'}" @click="onClickProfileTab(item.section)">
+        <a>{{ item.text }} {{ item.section }}</a>
       </li>
     </ul>
   </div>
@@ -12,6 +12,11 @@
 <script>
   export default {
     name: "ProfileTab",
+    props: {
+      hasSpouse: {
+        type: Boolean
+      },
+    },
     data() {
       return {
         activeTab: "basic",
@@ -31,10 +36,10 @@
       }
     },
     methods: {
-      OnClickProfileTab(section){
+      onClickProfileTab(section){
         this.activeTab = section
-        this.$emit('OnClickProfileTab', section)
-      }
+        this.$emit('onClickProfileTab', section)
+      },
     }
   }
 </script>

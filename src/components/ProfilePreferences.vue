@@ -41,10 +41,10 @@ export default {
   },
   watch: {
     preferences(value){
-      this.hobbiesAndInterests = value.hobbiesAndInterests
-      this.favoriteSports = value.favoriteSports
-      this.preferredMusic = value.preferredMusic
-      this.preferredMovies = value.preferredMovies
+      this.hobbiesAndInterests = value.hobbiesAndInterests || ""
+      this.favoriteSports = value.favoriteSports || ""
+      this.preferredMusic = value.preferredMusic || ""
+      this.preferredMovies = value.preferredMovies || ""
     }
   }
 }

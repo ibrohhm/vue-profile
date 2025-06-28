@@ -1,7 +1,7 @@
 <template>
   <div id="profile" class="flex justify-center w-full h-screen mt-20 pt-20">
-    <ProfileTab @OnClickProfileTab="OnClickProfileTab" class="w-1/4 px-10 py-20"></ProfileTab>
-    <ProfileDetail :profile="profile" class="w-1/2" :section="section" :editMode="editMode"></ProfileDetail>
+    <ProfileTab @onClickProfileTab="onClickProfileTab" :hasSpouse="hasSpouse" class="w-1/4 px-10 py-20"></ProfileTab>
+    <ProfileDetail :profile="profile" class="w-1/2" :section="section" :editMode="editMode" @onChangeMaritalStatus="onChangeMaritalStatus"></ProfileDetail>
     <ProfileAction :editMode="editMode" class="w-1/4"></ProfileAction>
   </div>
 </template>
@@ -23,6 +23,15 @@ export default {
     ProfileDetail,
     ProfileTab,
   },
+  computed: {
+    hasSpouse(){
+      if(this.isMarried !== null) {
+        return !!this.isMarried
+      } else {
+        return !!this.profile.spouse
+      }
+    }
+  },
   data(){
     return {
       section: "basic",
@@ -41,7 +50,8 @@ export default {
         spouse: null,
         prereferences: null
       },
-      editMode: true
+      editMode: true,
+      isMarried: null
     }
   },
   mounted(){
@@ -79,9 +89,12 @@ export default {
     })
   },
   methods: {
-    OnClickProfileTab(section){
+    onClickProfileTab(section){
       this.section = section
     },
+    onChangeMaritalStatus(maritalStatus){
+      this.isMarried = maritalStatus === "Married"
+    }
   }
 }
 </script>

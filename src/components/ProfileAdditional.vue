@@ -18,11 +18,19 @@
     </fieldset>
     <fieldset class="profile-additional--gender fieldset">
       <legend class="fieldset-legend text-base">Gender</legend>
-      <input type="text" class="input w-full" :value="gender" :disabled="!editMode"/>
+      <input v-if="!editMode" type="text" class="input w-full" :value="gender" disabled/>
+      <select v-else id="gender" class="select w-full" v-model="gender">
+        <option disabled value="">-- Select gender --</option>
+        <option v-for="item in genderList" :key="item" :value="item">{{ item }}</option>
+      </select>
     </fieldset>
     <fieldset class="profile-additional--marital-status fieldset">
       <legend class="fieldset-legend text-base">Marital status</legend>
-      <input type="text" class="input w-full" :value="maritalStatus" :disabled="!editMode"/>
+      <input v-if="!editMode" type="text" class="input w-full" :value="maritalStatus" disabled/>
+      <select v-else id="maritalStatus" class="select w-full" v-model="maritalStatus" @change="onChangeMaritalStatus">
+        <option disabled value="">-- Select marital status --</option>
+        <option v-for="item in maritalStatusList" :key="item" :value="item">{{ item }}</option>
+      </select>
     </fieldset>
   </div>
 </template>
@@ -41,6 +49,8 @@ export default {
   },
   data(){
     return {
+      genderList: ["Male","Female"],
+      maritalStatusList: ["Single","Married"],
       address: "",
       country: "",
       postalCode: "",
@@ -51,12 +61,17 @@ export default {
   },
   watch: {
     profile(value){
-      this.address = value.address
-      this.country = value.country
-      this.postalCode = value.postalCode
-      this.dateOfBirth = value.dateOfBirth
-      this.gender = value.gender
-      this.maritalStatus = value.maritalStatus
+      this.address = value.address || ""
+      this.country = value.country || ""
+      this.postalCode = value.postalCode || ""
+      this.dateOfBirth = value.dateOfBirth || ""
+      this.gender = value.gender || ""
+      this.maritalStatus = value.maritalStatus || ""
+    }
+  },
+  methods: {
+    onChangeMaritalStatus(){
+      this.$emit('onChangeMaritalStatus', this.maritalStatus)
     }
   }
 }

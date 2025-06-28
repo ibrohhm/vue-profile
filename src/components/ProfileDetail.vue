@@ -6,7 +6,7 @@
     <div class="profile-detail--content flex justify-between mt-10">
       <div class="profile-detail--content-image w-1/4 p-10"></div>
       <ProfileBasic :profile="profile" class="w-3/4" :class="{hidden: section !== 'basic'}" :editMode="editMode"></ProfileBasic>
-      <ProfileAdditional :profile="profile" class="w-3/4" :class="{hidden: section !== 'additional'}" :editMode="editMode"></ProfileAdditional>
+      <ProfileAdditional :profile="profile" class="w-3/4" :class="{hidden: section !== 'additional'}" :editMode="editMode" @onChangeMaritalStatus="onChangeMaritalStatus"></ProfileAdditional>
       <ProfileSpouse :spouse="profile.spouse" class="w-3/4" :class="{hidden: section !== 'spouse'}" :editMode="editMode"></ProfileSpouse>
       <ProfilePreferences :preferences="profile.preferences" class="w-3/4" :class="{hidden: section !== 'preferences'}" :editMode="editMode"></ProfilePreferences>
     </div>
@@ -39,6 +39,11 @@ export default {
     ProfileAdditional,
     ProfileSpouse,
     ProfilePreferences
+  },
+  methods: {
+    onChangeMaritalStatus(maritalStatus){
+      this.$emit('onChangeMaritalStatus', maritalStatus)
+    }
   }
 }
 </script>

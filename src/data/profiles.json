@@ -40,4 +40,8 @@
     "preferred_music": "human music",
     "preferred_movies": "fantasy"
   }
+}, {
+  "id": 3,
+  "spouse": null,
+  "preferences": null
 }]
