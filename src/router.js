@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import Home from './views/Home.vue';
-import Profile from './views/Profile.vue';
+import MyProfile from './views/MyProfile.vue';
+import EditProfile from './views/EditProfile.vue';
 import NotFound from './views/NotFound.vue';
 
 const routes = [
@@ -11,8 +12,14 @@ const routes = [
   },
   {
     path: '/profiles/:userId',
-    name: 'Profile',
-    component: Profile,
+    name: 'MyProfile',
+    component: MyProfile,
+    props: true
+  },
+  {
+    path: '/profiles/:userId/edit',
+    name: 'EditProfile',
+    component: EditProfile,
     props: true
   },
   {

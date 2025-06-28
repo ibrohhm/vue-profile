@@ -2,19 +2,19 @@
   <div class="profile-basic">
     <fieldset class="profile-basic--salutation fieldset">
       <legend class="fieldset-legend text-base">Salutation*</legend>
-      <input type="text" class="input w-full" :value="salutation"/>
+      <input type="text" class="input w-full" :value="salutation" :disabled="!editMode"/>
     </fieldset>
     <fieldset class="profile-basic--first-name fieldset">
       <legend class="fieldset-legend text-base">First name*</legend>
-      <input type="text" class="input w-full" :value="firstName"/>
+      <input type="text" class="input w-full" :value="firstName" :disabled="!editMode"/>
     </fieldset>
     <fieldset class="profile-basic--last-name fieldset">
       <legend class="fieldset-legend text-base">Last Name*</legend>
-      <input type="text" class="input w-full" :value="lastName"/>
+      <input type="text" class="input w-full" :value="lastName" :disabled="!editMode"/>
     </fieldset>
     <fieldset class="profile-basic--email fieldset">
       <legend class="fieldset-legend text-base">Email address*</legend>
-      <input type="text" class="input w-full" :value="email"/>
+      <input type="text" class="input w-full" :value="email" :disabled="!editMode"/>
     </fieldset>
   </div>
 </template>
@@ -25,7 +25,11 @@ export default {
   props: {
     profile: {
       type: Object,
-    }
+    },
+    editMode: {
+      type: Boolean,
+      required: true
+    },
   },
   data(){
     return {
@@ -45,3 +49,11 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+  input:disabled{
+    color: black;
+    background-color: white;
+    border: none;
+  }
+</style>

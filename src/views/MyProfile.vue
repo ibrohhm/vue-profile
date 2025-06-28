@@ -1,8 +1,8 @@
 <template>
-  <div id="profile" class="flex justify-center items-center w-full h-screen">
-    <ProfileTab @OnClickProfileTab="OnClickProfileTab" class="w-1/4"></ProfileTab>
-    <ProfileDetail :profile="profile" class="w-1/2" :section="section"></ProfileDetail>
-    <ProfileAction class="w-1/4"></ProfileAction>
+  <div id="profile" class="flex justify-center w-full h-screen mt-20 pt-20">
+    <ProfileTab @OnClickProfileTab="OnClickProfileTab" class="w-1/4 px-10 py-20"></ProfileTab>
+    <ProfileDetail :profile="profile" class="w-1/2" :section="section" :editMode="editMode"></ProfileDetail>
+    <ProfileAction :editMode="editMode" class="w-1/4"></ProfileAction>
   </div>
 </template>
 
@@ -41,6 +41,7 @@ export default {
         spouse: null,
         prereferences: null
       },
+      editMode: false
     }
   },
   mounted(){
@@ -80,7 +81,7 @@ export default {
   methods: {
     OnClickProfileTab(section){
       this.section = section
-    }
+    },
   }
 }
 </script>
