@@ -1,8 +1,7 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const {
-  VueLoaderPlugin
-} = require('vue-loader');
+const { VueLoaderPlugin } = require('vue-loader');
+const Dotenv = require('dotenv-webpack');
 
 const __base = path.resolve(__dirname, '..');
 const __src = path.resolve(__base, 'src');
@@ -53,6 +52,7 @@ module.exports = {
       title: 'Vue - Profile',
       template: path.resolve(__src, 'index.html'),
     }),
-    new VueLoaderPlugin()
+    new VueLoaderPlugin(),
+    new Dotenv()
   ]
 }

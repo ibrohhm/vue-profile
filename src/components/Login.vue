@@ -8,10 +8,12 @@
     </div>
     <div class="login-form w-4/5 mt-5">
       <div class="login-form--user-id my-4">
-        <input type="text" placeholder="User ID*" class="input w-full" />
+        <input type="text" placeholder="User ID*" v-model="form.userId" class="input w-full" :class="{'input-error': this.errors.userId}"/>
+        <p class="label text-error" v-if="this.errors.userId">Please input your user id.</p>
       </div>
       <div class="login-form--password my-4">
-        <input type="text" placeholder="Password*" class="input w-full" />
+        <input type="text" placeholder="Password*" v-model="form.password" class="input w-full" :class="{'input-error': this.errors.password}"/>
+        <p class="label text-error" v-if="this.errors.password">Please input your password.</p>
       </div>
       <div class="login-form--keep-login my-4">
         <label class="label">
@@ -20,7 +22,7 @@
         </label>
       </div>
       <div class="login-form--btn-login">
-        <button class="btn btn-neutral">Login</button>
+        <button class="btn btn-neutral" @click="onClickLogin">Login</button>
       </div>
     </div>
     <div class="login-note mt-5">
@@ -33,11 +35,38 @@
 export default {
   name: "Login",
   data(){
-    return {}
+    return {
+      form: {
+        userId: "",
+        password: "",
+      },
+      errors: {}
+    }
   },
   methods: {
     showRegister() {
       this.$emit('showRegister')
+    },
+    validateForm(){
+      this.errors = {}
+
+      if(!this.form.userId) this.errors.userId = true
+      if(!this.form.password) this.errors.password = true
+
+      return Object.keys(this.errors).length === 0;
+    },
+    onClickLogin(){
+      if(this.validateForm()){
+        this.$store.dispatch('auth/loginUser', this.form)
+          .then((res) => {
+            console.log("success")
+            console.log(res)
+          })
+          .catch(err => {
+            console.log("error")
+            console.log(err)
+          })
+      }
     }
   },
 }

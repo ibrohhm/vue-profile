@@ -1,13 +1,27 @@
 import dummyProfiles from "../data/profiles.json"
+import { supabase } from "../utils/supabase"
 
 const store = {
   namespaced: true,
   actions: {
     async fetchProfiles() {
-      return dummyProfiles
+      return await supabase.from('users').select()
     },
     async fetchProfileByUserId({ commit }, userId) {
-      return dummyProfiles.find(x => x.id == userId)
+      const { data, error } = await supabase
+        .from('users')
+        .select('*')
+        .eq('user_id', userId)
+        .single();
+
+      console.log("data", data)  
+
+      return dummyProfiles.find(x => x.id == 1)
+    },
+    async createProfile() {
+      return await supabase.from('users').insert([
+        { first_name: "test" }
+      ])
     }
   }
 }
