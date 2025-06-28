@@ -5,6 +5,7 @@ import router from './router';
 import './css/tailwind.css'
 import './css/main.css'
 import profileStore from './stores/profile'
+import FontAwesomeIcon from './plugins/fontawesome.js'
 
 const store = new Vuex.Store({
   modules: {
@@ -15,4 +16,5 @@ const store = new Vuex.Store({
 const app = createApp(App)
 app.use(router)
 app.use(store)
+app.component('font-awesome-icon', FontAwesomeIcon);
 app.mount('#app');
