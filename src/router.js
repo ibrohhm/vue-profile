@@ -11,16 +11,14 @@ const routes = [
     component: Home
   },
   {
-    path: '/profiles/:userId',
+    path: '/my-profile',
     name: 'MyProfile',
     component: MyProfile,
-    props: true
   },
   {
-    path: '/profiles/:userId/edit',
+    path: '/my-profile/edit',
     name: 'EditProfile',
     component: EditProfile,
-    props: true
   },
   {
     path: '/:catchAll(.*)',

@@ -1,4 +1,5 @@
 <template>
+  <navbar></navbar>
   <div id="profile" class="flex justify-center w-full h-screen mt-20 pt-20">
     <ProfileTab @onClickProfileTab="onClickProfileTab" :hasSpouse="hasSpouse" class="w-1/4 px-10 py-20"></ProfileTab>
     <ProfileDetail :profile="profile" class="w-1/2" :section="section" :editMode="editMode" @onChangeMaritalStatus="onChangeMaritalStatus"></ProfileDetail>
@@ -7,23 +8,22 @@
 </template>
 
 <script>
+import Navbar from '../components/Navbar.vue';
 import ProfileAction from '../components/ProfileAction.vue';
 import ProfileDetail from '../components/ProfileDetail.vue';
-import ProfileTab from '../components/ProfileTab.vue'
+import ProfileTab from '../components/ProfileTab.vue';
+import { mapGetters } from 'vuex';
 
 export default {
-  name: "Profile",
-  props: {
-    userId: {
-      type: Number
-    },
-  },
+  name: "EditProfile",
   components: {
+    Navbar,
     ProfileAction,
     ProfileDetail,
     ProfileTab,
   },
   computed: {
+    ...mapGetters({ currentUserId: 'auth/getCurrentUserId' }),
     hasSpouse(){
       if(this.isMarried !== null) {
         return !!this.isMarried
@@ -55,7 +55,7 @@ export default {
     }
   },
   mounted(){
-    this.$store.dispatch('profile/fetchProfileByUserId', this.userId).then((res) => {
+    this.$store.dispatch('profile/fetchProfileByUserId', this.currentUserId).then((res) => {
       this.profile = {
         id: res.id,
         salutation: res.salutation,

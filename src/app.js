@@ -4,11 +4,13 @@ import App from './App.vue'
 import router from './router';
 import './css/tailwind.css'
 import './css/main.css'
+import authStore from './stores/auth'
 import profileStore from './stores/profile'
 import FontAwesomeIcon from './plugins/fontawesome.js'
 
 const store = new Vuex.Store({
   modules: {
+    auth: authStore,
     profile: profileStore,
   }
 })
