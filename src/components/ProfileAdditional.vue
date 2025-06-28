@@ -2,32 +2,35 @@
   <div class="profile-additional">
     <fieldset class="profile-additional--home-address fieldset">
       <legend class="fieldset-legend text-base">Home address*</legend>
-      <input type="text" class="input w-full" :value="address" :disabled="!editMode"/>
+      <input type="text" class="input w-full" v-model="form.address" :disabled="!editMode" :class="{'input-error': this.errors.address}"/>
+      <p class="label text-error" v-if="this.errors.address">please input your address.</p>
     </fieldset>
     <fieldset class="profile-additional--country fieldset">
       <legend class="fieldset-legend text-base">Country*</legend>
-      <input type="text" class="input w-full" :value="country" :disabled="!editMode"/>
+      <input type="text" class="input w-full" v-model="form.country" :disabled="!editMode"  :class="{'input-error': this.errors.country}"/>
+      <p class="label text-error" v-if="this.errors.country">please input your country.</p>
     </fieldset>
     <fieldset class="profile-additional--postal-code fieldset">
       <legend class="fieldset-legend text-base">Postal code*</legend>
-      <input type="text" class="input w-full" :value="postalCode" :disabled="!editMode"/>
+      <input type="text" class="input w-full" v-model="form.postalCode" :disabled="!editMode"  :class="{'input-error': this.errors.postalCode}"/>
+      <p class="label text-error" v-if="this.errors.postalCode">please input your postal code.</p>
     </fieldset>
     <fieldset class="profile-additional--birth fieldset">
       <legend class="fieldset-legend text-base">Date of birth</legend>
-      <input type="text" class="input w-full" :value="dateOfBirth" :disabled="!editMode"/>
+      <input type="text" class="input w-full" v-model="form.dateOfBirth" :disabled="!editMode"/>
     </fieldset>
     <fieldset class="profile-additional--gender fieldset">
       <legend class="fieldset-legend text-base">Gender</legend>
-      <input v-if="!editMode" type="text" class="input w-full" :value="gender" disabled/>
-      <select v-else id="gender" class="select w-full" v-model="gender">
+      <input v-if="!editMode" type="text" class="input w-full" v-model="form.gender" disabled/>
+      <select v-else id="gender" class="select w-full" v-model="form.gender">
         <option disabled value="">-- Select gender --</option>
         <option v-for="item in genderList" :key="item" :value="item">{{ item }}</option>
       </select>
     </fieldset>
     <fieldset class="profile-additional--marital-status fieldset">
       <legend class="fieldset-legend text-base">Marital status</legend>
-      <input v-if="!editMode" type="text" class="input w-full" :value="maritalStatus" disabled/>
-      <select v-else id="maritalStatus" class="select w-full" v-model="maritalStatus" @change="onChangeMaritalStatus">
+      <input v-if="!editMode" type="text" class="input w-full" v-model="form.maritalStatus" disabled/>
+      <select v-else id="maritalStatus" class="select w-full" v-model="form.maritalStatus" @change="onChangeMaritalStatus">
         <option disabled value="">-- Select marital status --</option>
         <option v-for="item in maritalStatusList" :key="item" :value="item">{{ item }}</option>
       </select>
@@ -60,38 +63,44 @@ export default {
     return {
       genderList: ["Male","Female"],
       maritalStatusList: ["Single","Married"],
-      address: "",
-      country: "",
-      postalCode: "",
-      dateOfBirth: "",
-      gender: "",
-      maritalStatus: ""
+      form: {
+        address: "",
+        country: "",
+        postalCode: "",
+        dateOfBirth: "",
+        gender: "",
+        maritalStatus: ""
+      },
+      errors: {}
     }
   },
   watch: {
     profile(value){
-      this.address = value.address || ""
-      this.country = value.country || ""
-      this.postalCode = value.postalCode || ""
-      this.dateOfBirth = value.dateOfBirth || ""
-      this.gender = value.gender || ""
-      this.maritalStatus = value.maritalStatus || ""
+      this.form = {
+        address: value.address || "",
+        country: value.country || "",
+        postalCode: value.postalCode || "",
+        dateOfBirth: value.dateOfBirth || "",
+        gender: value.gender || "",
+        maritalStatus: value.maritalStatus || ""
+      }
     }
   },
   methods: {
+    validateForm(){
+      this.errors = {}
+
+      if(!this.form.address) this.errors.address = true
+      if(!this.form.country) this.errors.country = true
+      if(!this.form.postalCode) this.errors.postalCode = true
+
+      return Object.keys(this.errors).length === 0;
+    },
     onChangeMaritalStatus(){
-      this.$emit('onChangeMaritalStatus', this.maritalStatus)
+      this.$emit('onChangeMaritalStatus', this.form.maritalStatus)
     },
     onClickSave(){
-      let data = {
-        address: this.address,
-        country: this.country,
-        postalCode: this.postalCode,
-        dateOfBirth: this.dateOfBirth,
-        gender: this.gender,
-        maritalStatus: this.maritalStatus
-      }
-      this.$emit("onSaveProfileAdditional", data)
+      if(this.validateForm()) this.$emit("onSaveProfileAdditional", this.form)
     },
     onClickCancel(){
       this.$router.push({ name: 'MyProfile' })

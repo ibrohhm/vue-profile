@@ -2,19 +2,19 @@
   <div class="profile-preferences">
     <fieldset class="profile-preferences--hobby fieldset">
       <legend class="fieldset-legend text-base">Hobby and interests</legend>
-      <input type="text" class="input w-full" :value="hobbiesAndInterests" :disabled="!editMode"/>
+      <input type="text" class="input w-full" v-model="form.hobbiesAndInterests" :disabled="!editMode"/>
     </fieldset>
     <fieldset class="profile-preferences--sport fieldset">
       <legend class="fieldset-legend text-base">Favorite sport(s)</legend>
-      <input type="text" class="input w-full" :value="favoriteSports" :disabled="!editMode"/>
+      <input type="text" class="input w-full" v-model="form.favoriteSports" :disabled="!editMode"/>
     </fieldset>
     <fieldset class="profile-preferences--music fieldset">
       <legend class="fieldset-legend text-base">Preferred music genre(s)</legend>
-      <input type="text" class="input w-full" :value="preferredMusic" :disabled="!editMode"/>
+      <input type="text" class="input w-full" v-model="form.preferredMusic" :disabled="!editMode"/>
     </fieldset>
     <fieldset class="profile-preferences--movie fieldset">
       <legend class="fieldset-legend text-base">Preferred movie/TV show(s)</legend>
-      <input type="text" class="input w-full" :value="preferredMovies" :disabled="!editMode"/>
+      <input type="text" class="input w-full" v-model="form.preferredMovies" :disabled="!editMode"/>
     </fieldset>
     <template v-if="editMode">
       <div class="profile-basic--buttons mt-5">
@@ -42,29 +42,27 @@ export default {
   },
   data(){
     return {
-      hobbiesAndInterests: "",
-      favoriteSports: "",
-      preferredMusic: "",
-      preferredMovies: ""
+      form: {
+        hobbiesAndInterests: "",
+        favoriteSports: "",
+        preferredMusic: "",
+        preferredMovies: ""
+      }
     }
   },
   watch: {
     preferences(value){
-      this.hobbiesAndInterests = value.hobbiesAndInterests || ""
-      this.favoriteSports = value.favoriteSports || ""
-      this.preferredMusic = value.preferredMusic || ""
-      this.preferredMovies = value.preferredMovies || ""
+      this.form = {
+        hobbiesAndInterests: value.hobbiesAndInterests || "",
+        favoriteSports: value.favoriteSports || "",
+        preferredMusic: value.preferredMusic || "",
+        preferredMovies: value.preferredMovies || ""
+      }
     }
   },
   methods: {
     onClickSave(){
-      let data = {
-        hobbiesAndInterests: this.hobbiesAndInterests,
-        favoriteSports: this.favoriteSports,
-        preferredMusic: this.preferredMusic,
-        preferredMovies: this.preferredMovies
-      }
-      this.$emit("onSaveProfilePreferences", data)
+      this.$emit("onSaveProfilePreferences", this.form)
     },
     onClickCancel(){
       this.$router.push({ name: 'MyProfile' })
