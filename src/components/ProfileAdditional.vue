@@ -32,6 +32,15 @@
         <option v-for="item in maritalStatusList" :key="item" :value="item">{{ item }}</option>
       </select>
     </fieldset>
+    <template v-if="editMode">
+      <div class="profile-basic--buttons mt-5">
+        <button class="btn btn-neutral" @click="onClickSave">SAVE & UPDATE</button>
+        <button class="btn ml-2" @click="onClickCancel">CANCEL</button>
+      </div>
+      <div class="profile-basic--note mt-5 italic font-thin">
+        * Mandatory field
+      </div>
+    </template>
   </div>
 </template>
 
@@ -72,6 +81,20 @@ export default {
   methods: {
     onChangeMaritalStatus(){
       this.$emit('onChangeMaritalStatus', this.maritalStatus)
+    },
+    onClickSave(){
+      let data = {
+        address: this.address,
+        country: this.country,
+        postalCode: this.postalCode,
+        dateOfBirth: this.dateOfBirth,
+        gender: this.gender,
+        maritalStatus: this.maritalStatus
+      }
+      this.$emit("onSaveProfileAdditional", data)
+    },
+    onClickCancel(){
+      this.$router.push({ name: 'MyProfile' })
     }
   }
 }
@@ -82,5 +105,8 @@ export default {
     color: black;
     background-color: white;
     border: none;
+    &:hover{
+      cursor: text;
+    }
   }
 </style>

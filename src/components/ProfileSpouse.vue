@@ -16,6 +16,15 @@
       <legend class="fieldset-legend text-base">Last Name</legend>
       <input type="text" class="input w-full" :value="lastName" :disabled="!editMode"/>
     </fieldset>
+    <template v-if="editMode">
+      <div class="profile-basic--buttons mt-5">
+        <button class="btn btn-neutral" @click="onClickSave">SAVE & UPDATE</button>
+        <button class="btn ml-2" @click="onClickCancel">CANCEL</button>
+      </div>
+      <div class="profile-basic--note mt-5 italic font-thin">
+        * Mandatory field
+      </div>
+    </template>
   </div>
 </template>
 
@@ -45,6 +54,19 @@ export default {
       this.firstName = value && value.firstName || ""
       this.lastName = value && value.lastName || ""
     }
+  },
+  methods: {
+    onClickSave(){
+      let data = {
+        salutation: this.salutation,
+        firstName: this.firstName,
+        lastName: this.lastName,
+      }
+      this.$emit("onSaveProfileSpouse", data)
+    },
+    onClickCancel(){
+      this.$router.push({ name: 'MyProfile' })
+    }
   }
 }
 </script>
@@ -54,5 +76,8 @@ export default {
     color: black;
     background-color: white;
     border: none;
+    &:hover{
+      cursor: text;
+    }
   }
 </style>
