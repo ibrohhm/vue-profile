@@ -1,0 +1,43 @@
+[{
+  "id": 1,
+  "salutation": "Mr.",
+  "first_name": "John",
+  "last_name": "Doe Jr.",
+  "email": "johndoe@anyemail.com",
+  "address": "some address",
+  "country": "country A",
+  "postal_code": "13542",
+  "date_of_birth": "1984-10-12",
+  "gender": "Male",
+  "marital_status": "Married",
+  "spouse": {
+    "salutation": "Ms.",
+    "first_name": "Rine",
+    "last_name": "Doe"
+  },
+  "preferences": {
+    "hobbies_and_interests": "play games",
+    "favorite_sports": "football",
+    "preferred_music": "country music",
+    "preferred_movies": "western series"
+  }
+}, {
+  "id": 2,
+  "salutation": "Mr.",
+  "first_name": "Rick",
+  "last_name": "Sanches",
+  "email": "ricksanches@anyemail.com",
+  "address": "some address",
+  "country": "country B",
+  "postal_code": "13535",
+  "date_of_birth": "1943-01-15",
+  "gender": "Male",
+  "marital_status": "Single",
+  "spouse": null,
+  "preferences": {
+    "hobbies_and_interests": "science and invention",
+    "favorite_sports": "running",
+    "preferred_music": "human music",
+    "preferred_movies": "fantasy"
+  }
+}]

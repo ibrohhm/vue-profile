@@ -5,10 +5,10 @@
     </div>
     <div class="profile-detail--content flex justify-center items-center">
       <div class="profile-detail--content-image w-1/4"></div>
-      <ProfileBasic class="w-3/4" v-if="section === 'basic'"></ProfileBasic>
-      <ProfileAdditional class="w-3/4" v-else-if="section === 'additional'"></ProfileAdditional>
-      <ProfileSpouse class="w-3/4" v-else-if="section === 'spouse'"></ProfileSpouse>
-      <ProfilePreferences class="w-3/4" v-else-if="section === 'preferences'"></ProfilePreferences>
+      <ProfileBasic :profile="profile" class="w-3/4" :class="{hidden: section !== 'basic'}"></ProfileBasic>
+      <ProfileAdditional :profile="profile" class="w-3/4" :class="{hidden: section !== 'additional'}"></ProfileAdditional>
+      <ProfileSpouse :spouse="profile.spouse" class="w-3/4" :class="{hidden: section !== 'spouse'}"></ProfileSpouse>
+      <ProfilePreferences :preferences="profile.preferences" class="w-3/4" :class="{hidden: section !== 'preferences'}"></ProfilePreferences>
     </div>
   </div>
 </template>
@@ -25,6 +25,9 @@ export default {
     section: {
       type: String,
       required: true
+    },
+    profile: {
+      type: Object,
     }
   },
   components: {
