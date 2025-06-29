@@ -25,7 +25,7 @@ const store = {
     },
     removeUserId(state){
       localStorage.setItem('current_user_id', "");
-      state.userId = null
+      state.userId = ""
     }
   },
   actions: {

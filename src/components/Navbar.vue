@@ -1,5 +1,5 @@
 <template>
-  <div id="navbar" class="navbar bg-base-100 shadow-sm">
+  <div id="navbar" class="navbar bg-base-100 shadow-sm fixed z-1 top-0 w-full">
     <div class="flex-1">
       <a class="btn btn-ghost text-xl" @click="goToHomepage">Profile Apps</a>
     </div>
@@ -10,7 +10,7 @@
         </div>
         <ul
           tabindex="0"
-          class="navbar-menu menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
+          class="navbar-menu menu menu-sm dropdown-content bg-base-100 rounded-box fixed z-1 right-0 mt-3 w-52 p-2 shadow bg-white">
           <li><a @click="goToHomepage">Homepage</a></li>
           <li><a @click="goToMyProfile">My Profile</a></li>
           <li><a @click="goToEditProfile">Edit Profile</a></li>
@@ -62,16 +62,3 @@ export default {
   },
 }
 </script>
-<style scoped>
-#navbar{
-  position: fixed;
-  z-index: 1;
-  top: 0;
-  width: 100%;
-  background-color: white;
-  .navbar-menu{
-    position: fixed;
-    right: 0;
-  }
-}
-</style>
