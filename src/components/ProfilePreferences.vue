@@ -21,7 +21,7 @@
         <button class="btn btn-neutral" @click="onClickSave">SAVE & UPDATE</button>
         <button class="btn ml-2" @click="onClickCancel">CANCEL</button>
       </div>
-      <div class="profile-basic--note mt-5 italic font-thin">
+      <div class="profile-basic--note mt-5 italic font-thin text-sm">
         * Mandatory field
       </div>
     </template>

@@ -17,7 +17,8 @@
     </fieldset>
     <fieldset class="profile-additional--birth fieldset">
       <legend class="fieldset-legend text-base">Date of birth</legend>
-      <input type="text" class="input w-full" v-model="form.dateOfBirth" :disabled="!editMode"/>
+      <input type="date" class="input w-full" v-model="form.dateOfBirth" :disabled="!editMode" :class="{'input-error': this.errors.ageUnder17}"/>
+      <p class="label text-error" v-if="this.errors.ageUnder17">minimum 17 years old</p>
     </fieldset>
     <fieldset class="profile-additional--gender fieldset">
       <legend class="fieldset-legend text-base">Gender</legend>
@@ -40,7 +41,7 @@
         <button class="btn btn-neutral" @click="onClickSave">SAVE & UPDATE</button>
         <button class="btn ml-2" @click="onClickCancel">CANCEL</button>
       </div>
-      <div class="profile-basic--note mt-5 italic font-thin">
+      <div class="profile-basic--note mt-5 italic font-thin text-sm">
         * Mandatory field
       </div>
     </template>
@@ -93,6 +94,17 @@ export default {
       if(!this.form.address) this.errors.address = true
       if(!this.form.country) this.errors.country = true
       if(!this.form.postalCode) this.errors.postalCode = true
+
+      if(!!this.form.dateOfBirth) {
+        const birthDate = new Date(this.form.dateOfBirth);
+        const today = new Date();
+
+        const seventeenYearsAgo = new Date();
+        seventeenYearsAgo.setFullYear(today.getFullYear() - 17);
+        if(birthDate > seventeenYearsAgo) {
+          this.errors.ageUnder17 = true
+        }
+      }
 
       return Object.keys(this.errors).length === 0;
     },
