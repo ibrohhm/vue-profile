@@ -9,22 +9,47 @@ const store = {
   },
   getters: {
     getCurrentUserId(state) {
-      return state.userId || localStorage.getItem('current_user_id')
+      if (state.userId) return state.userId;
+
+      const getTokenUserId = (tokenStr) => {
+        try {
+          const token = JSON.parse(tokenStr);
+          if (token.expired_in && new Date(token.expired_in) < new Date()) return 0;
+          return token.current_user_id || 0;
+        } catch {
+          return 0;
+        }
+      };
+    
+      const sessionToken = sessionStorage.getItem('auth_token');
+      if (sessionToken) return getTokenUserId(sessionToken);
+    
+      const localToken = localStorage.getItem('auth_token');
+      if (localToken) return getTokenUserId(localToken);
+    
+      return 0;
     },
-    getCurrentUser(state) {
-      return state.user
-    }
   },
   mutations: {
-    setUser(state, user) {
-      state.user = user
-    },
-    setUserId(state, userId){
-      localStorage.setItem('current_user_id', userId);
-      state.userId = userId
+    setAuthToken(state, param){
+      const authToken = {
+        current_user_id: param.userId,
+      }
+
+      if(param.keepMeLoggedIn) {
+        const now = new Date();
+        const oneYearLater = new Date(now.setFullYear(now.getFullYear() + 1));
+        authToken.expired_in = oneYearLater.toISOString()
+
+        localStorage.setItem('auth_token', JSON.stringify(authToken))
+      }
+
+      sessionStorage.setItem('auth_token', JSON.stringify(authToken));
+      state.userId = param.userId
     },
     removeUserId(state){
-      localStorage.setItem('current_user_id', "");
+      localStorage.removeItem('auth_token');
+      sessionStorage.removeItem('auth_token');
       state.userId = ""
     }
   },
@@ -43,8 +68,9 @@ const store = {
       if (error) {
         console.error('Signup failed:', error)
       } else {
-        commit('setUser', data.user)
-        commit('setUserId', data.user.user_metadata.user_id)
+        commit('setAuthToken', {
+          userId: data.user.user_metadata.user_id
+        })
       }
 
       return { data, error }
@@ -58,8 +84,10 @@ const store = {
       if (error) {
         console.error('Login failed:', error)
       } else {
-        commit('setUser', data.user)
-        commit('setUserId', data.user.user_metadata.user_id)
+        commit('setAuthToken', {
+          userId: data.user.user_metadata.user_id,
+          keepMeLoggedIn: param.keepMeLoggedIn
+        })
       }
 
       return { data, error }

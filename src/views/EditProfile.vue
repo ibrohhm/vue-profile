@@ -23,7 +23,7 @@ export default {
     ProfileTab,
   },
   computed: {
-    ...mapGetters({ currentUserId: 'auth/getCurrentUserId', currentUser: 'auth/getCurrentUser' }),
+    ...mapGetters({ currentUserId: 'auth/getCurrentUserId' }),
     hasSpouse(){
       if(this.isMarried !== null) {
         return !!this.isMarried

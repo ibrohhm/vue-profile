@@ -24,7 +24,7 @@
       </div>
       <div class="login-form--keep-login my-4">
         <label class="label">
-          <input type="checkbox" class="checkbox" disabled/>
+          <input type="checkbox" class="checkbox" v-model="form.keepMeLoggedIn"/>
           Keep me logged in
         </label>
       </div>
@@ -51,6 +51,7 @@ export default {
       form: {
         userId: "",
         password: "",
+        keepMeLoggedIn: false
       },
       errors: {},
       isLoading: false,
