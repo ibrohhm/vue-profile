@@ -12,12 +12,19 @@
         <p class="label text-error" v-if="this.errors.userId">Please input your user id.</p>
       </div>
       <div class="login-form--password my-4">
-        <input type="text" placeholder="Password*" v-model="form.password" class="input w-full" :class="{'input-error': this.errors.password}"/>
+        <label v-if="showPassword" class="input validator w-full" :class="{'input-error': this.errors.password}">
+          <input type="text" placeholder="Password*" v-model="form.password"/>
+          <font-awesome-icon class="mr-1 cursor-pointer" :icon="['fas', 'eye-slash']" @click="onHidePassword"/>
+        </label>
+        <label v-else class="input w-full" :class="{'input-error': this.errors.password}">
+          <input type="password" placeholder="Password*" v-model="form.password"/>
+          <font-awesome-icon class="mr-1 cursor-pointer" :icon="['fas', 'eye']" @click="onShowPassword"/>
+        </label>
         <p class="label text-error" v-if="this.errors.password">Please input your password.</p>
       </div>
       <div class="login-form--keep-login my-4">
         <label class="label">
-          <input type="checkbox" class="checkbox" />
+          <input type="checkbox" class="checkbox" disabled/>
           Keep me logged in
         </label>
       </div>
@@ -30,10 +37,12 @@
     </div>
   </div>
   <loading :show="isLoading"></loading>
+  <message-alert :message="messageError" :show="!!messageError"></message-alert>
 </template>
 
 <script>
 import Loading from '../components/Loading.vue'
+import MessageAlert from './MessageAlert.vue'
 
 export default {
   name: "Login",
@@ -44,11 +53,14 @@ export default {
         password: "",
       },
       errors: {},
-      isLoading: false
+      isLoading: false,
+      messageError: null,
+      showPassword: false
     }
   },
   components: {
-    Loading
+    Loading,
+    MessageAlert
   },
   methods: {
     showRegister() {
@@ -65,9 +77,14 @@ export default {
     onClickLogin(){
       if(this.validateForm()){
         this.isLoading = true
+        this.messageError = null
         this.$store.dispatch('auth/loginUser', this.form)
           .then((res) => {
-            this.$router.push({ name: 'MyProfile' })
+            if(res.error){
+              this.messageError = res.error.message
+            } else {
+              this.$router.push({ name: 'MyProfile' })
+            }
           })
           .catch(err => {
             console.log("error")
@@ -77,6 +94,12 @@ export default {
             this.isLoading = false
           })
       }
+    },
+    onShowPassword(){
+      this.showPassword = true
+    },
+    onHidePassword(){
+      this.showPassword = false
     }
   },
 }

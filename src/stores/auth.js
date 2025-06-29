@@ -3,14 +3,13 @@ import { supabase } from "../utils/supabase"
 const store = {
   namespaced: true,
   state: {
-    currentUserId: 1,
     user: null,
     userId: null,
     error: null
   },
   getters: {
     getCurrentUserId(state) {
-      return state.userId
+      return state.userId || localStorage.getItem('current_user_id')
     },
     getCurrentUser(state) {
       return state.user
@@ -21,6 +20,7 @@ const store = {
       state.user = user
     },
     setUserId(state, userId){
+      localStorage.setItem('current_user_id', userId);
       state.userId = userId
     }
   },
@@ -54,15 +54,12 @@ const store = {
 
       if (error) {
         console.error('Login failed:', error)
-        this.error = error.message
-        return null
+      } else {
+        commit('setUser', data.user)
+        commit('setUserId', data.user.user_metadata.user_id)
       }
 
-      this.user = data.user
-      this.error = null
-      commit('setUser', data.user)
-      commit('setUserId', data.user.user_metadata.user_id)
-      return data.user
+      return { data, error }
     },
     async logout() {
       await supabase.auth.signOut()
