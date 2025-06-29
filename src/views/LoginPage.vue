@@ -1,4 +1,5 @@
 <template>
+  <navbar></navbar>
   <div id="home" class="flex justify-center items-center w-full h-screen">
     <template v-if="isUserHasAccount">
       <login @showRegister="showRegister"></login>
@@ -10,6 +11,7 @@
 </template>
 
 <script>
+import Navbar from '../components/Navbar.vue';
 import Login from '../components/Login.vue'
 import Register from '../components/Register.vue'
 import { mapGetters } from 'vuex';
@@ -17,6 +19,7 @@ import { mapGetters } from 'vuex';
 export default {
   name: "Home",
   components: {
+    Navbar,
     Login,
     Register
   },

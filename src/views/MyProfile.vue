@@ -1,5 +1,5 @@
 <template>
-  <navbar></navbar>
+  <navbar :showMenu="true"></navbar>
   <div id="my-profile" class="flex justify-center w-full">
     <ProfileTab @onClickProfileTab="onClickProfileTab" :hasSpouse="hasSpouse" class="w-1/4 px-10 py-20"></ProfileTab>
     <ProfileDetail :profile="profile" class="w-1/2" :section="section" :editMode="editMode"></ProfileDetail>
