@@ -38,13 +38,12 @@ const store = {
 
       if (error) {
         console.error('Signup failed:', error)
-        this.error = error.message
-        return null
+      } else {
+        commit('setUser', data.user)
+        commit('setUserId', data.user.user_metadata.user_id)
       }
 
-      this.user = data.user
-      this.error = null
-      return data.user
+      return { data, error }
     },
     async loginUser({commit}, param){
       const { data, error } = await supabase.auth.signInWithPassword({

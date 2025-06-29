@@ -14,11 +14,11 @@
       <div class="login-form--password my-4">
         <label v-if="showPassword" class="input validator w-full" :class="{'input-error': this.errors.password}">
           <input type="text" placeholder="Password*" v-model="form.password"/>
-          <font-awesome-icon class="mr-1 cursor-pointer" :icon="['fas', 'eye-slash']" @click="onHidePassword"/>
+          <font-awesome-icon class="mr-1 cursor-pointer" :icon="['fas', 'eye-slash']" @click="showPassword = false"/>
         </label>
         <label v-else class="input w-full" :class="{'input-error': this.errors.password}">
           <input type="password" placeholder="Password*" v-model="form.password"/>
-          <font-awesome-icon class="mr-1 cursor-pointer" :icon="['fas', 'eye']" @click="onShowPassword"/>
+          <font-awesome-icon class="mr-1 cursor-pointer" :icon="['fas', 'eye']" @click="showPassword = true"/>
         </label>
         <p class="label text-error" v-if="this.errors.password">Please input your password.</p>
       </div>
@@ -75,9 +75,9 @@ export default {
       return Object.keys(this.errors).length === 0;
     },
     onClickLogin(){
+      this.messageError = null
       if(this.validateForm()){
         this.isLoading = true
-        this.messageError = null
         this.$store.dispatch('auth/loginUser', this.form)
           .then((res) => {
             if(res.error){
@@ -94,12 +94,6 @@ export default {
             this.isLoading = false
           })
       }
-    },
-    onShowPassword(){
-      this.showPassword = true
-    },
-    onHidePassword(){
-      this.showPassword = false
     }
   },
 }

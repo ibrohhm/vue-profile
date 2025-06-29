@@ -12,13 +12,26 @@
         <p class="label text-error" v-if="this.errors.userId">Please input your user id.</p>
       </div>
       <div class="register-form--password my-4">
-        <input type="text" placeholder="Password*" v-model="form.password" class="input w-full" :class="{'input-error': this.errors.password}"/>
+        <label v-if="showPassword" class="input w-full" :class="{'input-error': this.errors.password}">
+          <input type="text" placeholder="Password*" v-model="form.password"/>
+          <font-awesome-icon class="mr-1 cursor-pointer" :icon="['fas', 'eye-slash']" @click="showPassword = false"/>
+        </label>
+        <label v-else class="input w-full" :class="{'input-error': this.errors.password}">
+          <input type="password" placeholder="Password*" v-model="form.password"/>
+          <font-awesome-icon class="mr-1 cursor-pointer" :icon="['fas', 'eye']" @click="showPassword = true"/>
+        </label>
         <p class="label text-error" v-if="this.errors.password">Please input your password.</p>
       </div>
       <div class="register-form--confirm-password my-4">
-        <input type="text" placeholder="Confirm Password*" v-model="form.confirmPassword" class="input w-full" :class="{'input-error': this.errors.confirmPassword}"/>
-        <p class="label text-error" v-if="this.errors.confirmPassword">Please input your confirm password.</p>
-        <p class="label text-error" v-if="this.errors.passwordDoNotMatch">Your passwords do not match.</p>
+        <label v-if="showConfirmPassword" class="input w-full" :class="{'input-error': this.errors.confirmPassword}">
+          <input type="text" placeholder="Confirm Password*" v-model="form.confirmPassword"/>
+          <font-awesome-icon class="mr-1 cursor-pointer" :icon="['fas', 'eye-slash']" @click="showConfirmPassword = false"/>
+        </label>
+        <label v-else class="input w-full" :class="{'input-error': this.errors.confirmPassword}">
+          <input type="password" placeholder="Confirm Password*" v-model="form.confirmPassword"/>
+          <font-awesome-icon class="mr-1 cursor-pointer" :icon="['fas', 'eye']" @click="showConfirmPassword = true"/>
+        </label>
+        <p class="label text-error" v-if="this.errors.password">Please input your confirm password.</p>
       </div>
       <div class="register-form--btn-register">
         <button class="btn btn-neutral" @click="onClickRegister">Register</button>
@@ -28,9 +41,14 @@
       Already have account? <a class="link" @click="showLogin">login here</a>
     </div>
   </div>
+  <loading :show="isLoading"></loading>
+  <message-alert :message="messageError" :show="!!messageError"></message-alert>
 </template>
 
 <script>
+import Loading from '../components/Loading.vue'
+import MessageAlert from './MessageAlert.vue'
+
 export default {
   name: "Register",
   data(){
@@ -40,8 +58,16 @@ export default {
         password: "",
         confirmPassword: ""
       },
-      errors: {}
+      errors: {},
+      isLoading: false,
+      messageError: null,
+      showPassword: false,
+      showConfirmPassword: false
     }
+  },
+  components: {
+    Loading,
+    MessageAlert
   },
   methods: {
     showLogin() {
@@ -56,23 +82,32 @@ export default {
         this.errors.confirmPassword = true
       } else if(this.form.password !== this.form.confirmPassword){
         this.errors.passwordDoNotMatch = true
+        this.messageError = "Your passwords do not match."
       }
 
       return Object.keys(this.errors).length === 0;
     },
     onClickRegister(){
+      this.messageError = null
       if(this.validateForm()){
+        this.isLoading = true
         this.$store.dispatch('auth/registerUser', this.form)
           .then((res) => {
-            console.log("success")
-            console.log(res)
+            if(res.error){
+              this.messageError = res.error.message
+            } else {
+              this.$router.push({ name: 'MyProfile' })
+            }
           })
           .catch(err => {
             console.log("error")
             console.log(err)
           })
+          .finally(() => {
+            this.isLoading = false
+          })
       }
-    }
+    },
   },
 }
 </script>
