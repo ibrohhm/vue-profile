@@ -23,7 +23,7 @@ export default {
     ProfileTab,
   },
   computed: {
-    ...mapGetters({ currentUserId: 'auth/getCurrentUserId' }),
+    ...mapGetters({ currentUserId: 'auth/getCurrentUserId', currentUser: 'auth/getCurrentUser' }),
     hasSpouse(){
       return !!this.profile.spouse
     }
@@ -50,38 +50,37 @@ export default {
     }
   },
   mounted(){
-    this.$store.dispatch('profile/fetchProfileByUserId', this.currentUserId).then((res) => {
-      this.profile = {
-        id: res.id,
-        salutation: res.salutation,
-        firstName: res.first_name,
-        lastName: res.last_name,
-        email: res.email,
-        address: res.address,
-        country: res.country,
-        postalCode: res.postal_code,
-        gender: res.gender,
-        dateOfBirth: res.date_of_birth,
-        maritalStatus: res.marital_status,
-      }
-
-      if(res.spouse !== null){
-        this.profile.spouse = {
-          salutation: res.spouse.salutation,
-          firstName: res.spouse.first_name,
-          lastName: res.spouse.last_name
+    if(!!this.currentUserId) {
+      this.$store.dispatch('profile/fetchProfileByUserId', this.currentUserId).then((res) => {
+        this.profile = {
+          id: res.id,
+          salutation: res.salutation || "",
+          firstName: res.first_name || "",
+          lastName: res.last_name || "",
+          email: res.email || "",
+          address: res.address || "",
+          country: res.country || "",
+          postalCode: res.postal_code || "",
+          gender: res.gender || "",
+          dateOfBirth: res.date_of_birth || "",
+          maritalStatus: res.marital_status || "",
+          preferences: {
+            hobbiesAndInterests: res.hobbies_and_interests || "",
+            favoriteSports: res.favorite_sports || "",
+            preferredMusic: res.preferred_music || "",
+            preferredMovies: res.preferred_movies || "",
+          }
         }
-      }
 
-      if(res.preferences !== null) {
-        this.profile.preferences = {
-          hobbiesAndInterests: res.preferences.hobbies_and_interests,
-          favoriteSports: res.preferences.favorite_sports,
-          preferredMusic: res.preferences.preferred_music,
-          preferredMovies: res.preferences.preferred_movies,
+        if(this.profile.maritalStatus === "Married") {
+          this.profile.spouse = {
+            salutation: res.spouse_salutation || "",
+            firstName: res.spouse_first_name || "",
+            lastName: res.spouse_last_name || "",
+          }
         }
-      }
-    })
+      })
+    }
   },
   methods: {
     onClickProfileTab(section){

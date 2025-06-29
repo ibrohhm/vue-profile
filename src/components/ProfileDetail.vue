@@ -41,6 +41,7 @@
         ></ProfilePreferences>
       </div>
     </div>
+    <loading :show="isLoading"></loading>
   </div>
 </template>
 
@@ -49,6 +50,7 @@ import ProfileBasic from './ProfileBasic.vue';
 import ProfileAdditional from './ProfileAdditional.vue';
 import ProfileSpouse from './ProfileSpouse.vue';
 import ProfilePreferences from './ProfilePreferences.vue';
+import Loading from '../components/Loading.vue'
 
 export default {
   name: "ProfileDetail",
@@ -69,7 +71,13 @@ export default {
     ProfileBasic,
     ProfileAdditional,
     ProfileSpouse,
-    ProfilePreferences
+    ProfilePreferences,
+    Loading
+  },
+  data(){
+    return {
+      isLoading: false
+    }
   },
   methods: {
     onChangeMaritalStatus(maritalStatus){
@@ -79,16 +87,60 @@ export default {
       alert("upload image")
     },
     onSaveProfileBasic(basicData){
-      console.log(basicData)
+      this.isLoading = true
+      this.$store.dispatch('profile/updateProfileBasic', basicData)
+        .then((res) => {
+          this.$router.push({ name: 'MyProfile' })
+        })
+        .catch(err => {
+          console.log("error")
+          console.log(err)
+        })
+        .finally(() => {
+          this.isLoading = false
+        })
     },
     onSaveProfileAdditional(additionalData){
-      console.log(additionalData)
+      this.isLoading = true
+      this.$store.dispatch('profile/updateProfileAdditional', additionalData)
+        .then((res) => {
+          this.$router.push({ name: 'MyProfile' })
+        })
+        .catch(err => {
+          console.log("error")
+          console.log(err)
+        })
+        .finally(() => {
+          this.isLoading = false
+        })
     },
     onSaveProfileSpouse(spouseData){
-      console.log(spouseData)
+      this.isLoading = true
+      this.$store.dispatch('profile/updateProfileSpouse', spouseData)
+        .then((res) => {
+          this.$router.push({ name: 'MyProfile' })
+        })
+        .catch(err => {
+          console.log("error")
+          console.log(err)
+        })
+        .finally(() => {
+          this.isLoading = false
+        })
     },
     onSaveProfilePreferences(preferencesData){
-      console.log(preferencesData)
+      this.isLoading = true
+      this.$store.dispatch('profile/updateProfilePreferences', preferencesData)
+        .then((res) => {
+          this.$router.push({ name: 'MyProfile' })
+        })
+        .catch(err => {
+          console.log("error")
+          console.log(err)
+        })
+        .finally(() => {
+          this.isLoading = false
+        })
     }
   }
 }

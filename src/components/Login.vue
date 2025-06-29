@@ -29,9 +29,12 @@
       No account? <a class="link" @click="showRegister">Register here</a>
     </div>
   </div>
+  <loading :show="isLoading"></loading>
 </template>
 
 <script>
+import Loading from '../components/Loading.vue'
+
 export default {
   name: "Login",
   data(){
@@ -40,8 +43,12 @@ export default {
         userId: "",
         password: "",
       },
-      errors: {}
+      errors: {},
+      isLoading: false
     }
+  },
+  components: {
+    Loading
   },
   methods: {
     showRegister() {
@@ -57,14 +64,17 @@ export default {
     },
     onClickLogin(){
       if(this.validateForm()){
+        this.isLoading = true
         this.$store.dispatch('auth/loginUser', this.form)
           .then((res) => {
-            console.log("success")
-            console.log(res)
+            this.$router.push({ name: 'MyProfile' })
           })
           .catch(err => {
             console.log("error")
             console.log(err)
+          })
+          .finally(() => {
+            this.isLoading = false
           })
       }
     }

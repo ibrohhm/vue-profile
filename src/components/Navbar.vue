@@ -1,7 +1,7 @@
 <template>
   <div id="navbar" class="navbar bg-base-100 shadow-sm">
     <div class="flex-1">
-      <a class="btn btn-ghost text-xl">Profile Apps</a>
+      <a class="btn btn-ghost text-xl" @click="goToHomepage">Profile Apps</a>
     </div>
     <div class="flex-none">
       <div class="dropdown">
@@ -29,7 +29,7 @@ export default {
   },
   methods: {
     goToHomepage(){
-      alert("homepage")
+      this.$router.push({ name: 'Home' })
     },
     goToMyProfile(){
       this.$router.push({ name: 'MyProfile' })

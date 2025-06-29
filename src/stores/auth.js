@@ -5,14 +5,23 @@ const store = {
   state: {
     currentUserId: 1,
     user: null,
+    userId: null,
     error: null
   },
   getters: {
     getCurrentUserId(state) {
-      return state.currentUserId
+      return state.userId
     },
     getCurrentUser(state) {
       return state.user
+    }
+  },
+  mutations: {
+    setUser(state, user) {
+      state.user = user
+    },
+    setUserId(state, userId){
+      state.userId = userId
     }
   },
   actions: {
@@ -51,6 +60,8 @@ const store = {
 
       this.user = data.user
       this.error = null
+      commit('setUser', data.user)
+      commit('setUserId', data.user.user_metadata.user_id)
       return data.user
     },
     async logout() {
