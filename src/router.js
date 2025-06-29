@@ -3,12 +3,18 @@ import Home from './views/Home.vue';
 import MyProfile from './views/MyProfile.vue';
 import EditProfile from './views/EditProfile.vue';
 import NotFound from './views/NotFound.vue';
+import LoginPage from './views/LoginPage.vue';
 
 const routes = [
   {
     path: '/',
     name: 'Home',
     component: Home
+  },
+  {
+    path: '/login',
+    name: "Login",
+    component: LoginPage,
   },
   {
     path: '/my-profile',

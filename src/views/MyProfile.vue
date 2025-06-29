@@ -23,7 +23,7 @@ export default {
     ProfileTab,
   },
   computed: {
-    ...mapGetters({ currentUserId: 'auth/getCurrentUserId', currentUser: 'auth/getCurrentUser' }),
+    ...mapGetters({ currentUserId: 'auth/getCurrentUserId' }),
     hasSpouse(){
       return !!this.profile.spouse
     }
@@ -80,6 +80,8 @@ export default {
           }
         }
       })
+    } else {
+      this.$router.push({ name: 'Login' })
     }
   },
   methods: {

@@ -19,13 +19,21 @@
       </div>
     </div>
   </div>
+  <loading :show="isLoading"></loading>
 </template>
 
 <script>
+import Loading from '../components/Loading.vue'
+
 export default {
   name: "Navbar",
+  components: {
+    Loading,
+  },
   data(){
-    return {}
+    return {
+      isLoading: false,
+    }
   },
   methods: {
     goToHomepage(){
@@ -38,7 +46,18 @@ export default {
       this.$router.push({ name: 'EditProfile' })
     },
     logout(){
-      alert("logout")
+      this.isLoading = true
+      this.$store.dispatch('auth/logout')
+        .then((res) => {
+          this.$router.push({ name: 'Login' })
+        })
+        .catch(err => {
+          console.log("error")
+          console.log(err)
+        })
+        .finally(() => {
+          this.isLoading = false
+        })
     },
   },
 }

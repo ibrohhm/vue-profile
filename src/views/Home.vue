@@ -1,11 +1,15 @@
 <template>
-  <div id="home" class="flex justify-center items-center w-full h-screen">
-    <template v-if="isUserHasAccount">
-      <login @showRegister="showRegister"></login>
-    </template>
-    <template v-else>
-      <register @showLogin="showLogin"></register>
-    </template>
+  <div id="home" class="flex flex-col justify-center items-center w-full h-screen">
+    <div class="home-header flex flex-col items-center">
+      <div class="home-header--text text-6xl">
+        Welcome to <span class="text-7xl">myApps</span>
+      </div>
+    </div>
+    <div class="home-buttons mt-10">
+      <div class="home-buttons--start">
+        <button class="btn btn-neutral btn-outline" @click="onClickStart">Start</button>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -25,12 +29,9 @@ export default {
     }
   },
   methods: {
-    showLogin() {
-      this.isUserHasAccount = true
+    onClickStart() {
+      this.$router.push({ name: 'Login' })
     },
-    showRegister() {
-      this.isUserHasAccount = false
-    }
   },
 }
 </script>

@@ -87,6 +87,8 @@ export default {
 
         console.log(this.profile)
       })
+    } else {
+      this.$router.push({ name: 'Login' })
     }
   },
   methods: {

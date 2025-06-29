@@ -22,6 +22,10 @@ const store = {
     setUserId(state, userId){
       localStorage.setItem('current_user_id', userId);
       state.userId = userId
+    },
+    removeUserId(state){
+      localStorage.setItem('current_user_id', "");
+      state.userId = null
     }
   },
   actions: {
@@ -60,9 +64,9 @@ const store = {
 
       return { data, error }
     },
-    async logout() {
+    async logout({commit}) {
       await supabase.auth.signOut()
-      this.user = null
+      commit('removeUserId')
     },
     async fetchUser() {
       const { data } = await supabase.auth.getUser()
