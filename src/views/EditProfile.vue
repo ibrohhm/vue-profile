@@ -5,6 +5,7 @@
     <ProfileDetail :profile="profile" class="w-1/2" :section="section" :editMode="editMode" @onChangeMaritalStatus="onChangeMaritalStatus"></ProfileDetail>
     <ProfileAction :editMode="editMode" class="w-1/4"></ProfileAction>
   </div>
+  <slide-background></slide-background>
 </template>
 
 <script>
@@ -12,6 +13,7 @@ import Navbar from '../components/Navbar.vue';
 import ProfileAction from '../components/ProfileAction.vue';
 import ProfileDetail from '../components/ProfileDetail.vue';
 import ProfileTab from '../components/ProfileTab.vue';
+import SlideBackground from '../components/SlideBackground.vue';
 import { mapGetters } from 'vuex';
 
 export default {
@@ -21,6 +23,7 @@ export default {
     ProfileAction,
     ProfileDetail,
     ProfileTab,
+    SlideBackground
   },
   computed: {
     ...mapGetters({ currentUserId: 'auth/getCurrentUserId' }),
@@ -105,9 +108,5 @@ export default {
 #edit-profile{
   padding: 80px 20px;
   min-height: 100vh;
-  box-shadow: inset rgba(76, 76, 92, 1) 0px -5px,
-              inset rgba(76, 76, 92, 0.75) 0px -10px,
-              inset rgba(76, 76, 92, 0.5) 0px -15px,
-              inset rgba(76, 76, 92, 0.25) 0px -20px;
 }
 </style>

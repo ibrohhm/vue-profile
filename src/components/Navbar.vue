@@ -1,5 +1,5 @@
 <template>
-  <div id="navbar" class="navbar bg-base-100 shadow-sm fixed z-1 top-0 w-full">
+  <div id="navbar" class="navbar bg-base-100 shadow-sm fixed top-0 w-full">
     <div class="flex-1">
       <a class="btn btn-ghost text-xl" @click="goToHomepage">Profile Apps</a>
     </div>
@@ -67,3 +67,9 @@ export default {
   },
 }
 </script>
+
+<style scoped>
+#navbar{
+  z-index: 1;
+}
+</style>

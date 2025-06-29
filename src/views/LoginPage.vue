@@ -8,12 +8,14 @@
       <register @showLogin="showLogin"></register>
     </template>
   </div>
+  <circle-background></circle-background>
 </template>
 
 <script>
 import Navbar from '../components/Navbar.vue';
 import Login from '../components/Login.vue'
 import Register from '../components/Register.vue'
+import CircleBackground from '../components/CircleBackground.vue';
 import { mapGetters } from 'vuex';
 
 export default {
@@ -21,7 +23,8 @@ export default {
   components: {
     Navbar,
     Login,
-    Register
+    Register,
+    CircleBackground
   },
   computed: {
     ...mapGetters({ currentUserId: 'auth/getCurrentUserId' })

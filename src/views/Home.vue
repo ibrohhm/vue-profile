@@ -11,17 +11,20 @@
       </div>
     </div>
   </div>
+  <circle-background></circle-background>
 </template>
 
 <script>
 import Login from '../components/Login.vue'
 import Register from '../components/Register.vue'
+import CircleBackground from '../components/CircleBackground.vue';
 
 export default {
   name: "Home",
   components: {
     Login,
-    Register
+    Register,
+    CircleBackground
   },
   data(){
     return {

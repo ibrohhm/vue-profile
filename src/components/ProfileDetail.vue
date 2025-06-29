@@ -153,6 +153,12 @@ export default {
 </style>
 
 <style scoped>
+.profile-detail--content{
+  max-height: 70vh;
+}
+.profile-detail--content-detail{
+  overflow: scroll;
+}
 .profile-detail--content-image{
   background-image: url('../images/blank-profile-picture-png.webp');
   height: 120px;
