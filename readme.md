@@ -1,5 +1,7 @@
 # Portfolio
-This repository maintains my profile apps, developed using Webpack and Vue.js, css library using tailwind + daisyUI https://daisyui.com/
+This repository maintains my profile apps, developed using Webpack and Vue.js, css library using tailwind + daisyUI https://daisyui.com/, also integrate the API with supabase
+
+demo: https://vue-profile.ibrohhm.com/
 
 ## Prerequisite
 - node v18.18.2
